@@ -14,7 +14,7 @@ eslint:
 	@echo 'eslint done!'
 
 install:
-	@tnpm i
+	@npm install --registry=https://registry.npm.taobao.org
 
 .PHONY: test eslint install
 

@@ -3,4 +3,4 @@ node_modules/
 *.log
 
 test/config.js
-
+package-lock.json
