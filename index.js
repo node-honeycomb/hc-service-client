@@ -4,6 +4,8 @@ const _ = require('lodash');
 const ServiceClient = require('./lib/service_client');
 
 module.exports = function (app, config) {
+  config = config || {};
+
   let req = app.express.request;
   let log = app.getLog();
   let ridHeader = config && config.ridHeader || 'eagleeye-traceid';
