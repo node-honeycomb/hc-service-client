@@ -40,7 +40,7 @@ describe('#new ServiceClient()', function () {
   it('test analysis service', function (done) {
     const client = new ServiceClient({
       endpoint: services.dtboost.endpoint,
-      accessKeyId: 'serviceClientTest',
+      accessKeyId: 'dtboost-system',
       accessKeySecret: config.systemToken,
       headers: {
         'EagleEye-TraceId': '123456',
@@ -180,7 +180,7 @@ describe('#new ServiceClient()', function () {
     });
     client.get('/service/otm/api/v2/categories', function (err, body) {
       debug('request with href', err, body);
-      assert(body);
+      assert(!err);
       done();
     });
   });
@@ -193,8 +193,61 @@ describe('#new ServiceClient()', function () {
       signatureApproach: 'userAuth'
     });
     client.post('/service/otm/api/v2/objects', {}, function (err) {
+      debug(arguments);
       assert(err);
       assert(err.code = 'OTM_ILLEGAL_PARAMETER');
+      done();
+    });
+  });
+
+  it('urllib should use qs to stringify querystring.', function (done) {
+    const client = new ServiceClient({
+      endpoint: services.azk.endpoint,
+      accessKeyId: config.accessKeyId,
+      accessKeySecret: services.azk.accessKeySecret,
+      headers: {
+        'EagleEye-TraceId': '123456',
+        'X-ScopeId': config.tenantCode,
+        'X-Operator': config.userId,
+        'X-Work-App': config.workApp
+      }
+    });
+    client.get('/alg/categories', {
+      scopeId: 'dtboost',
+      isPrivate: true,
+      referType: 'DEFINE',
+      tenant: config.tenantCode,
+      a: [1, 2, 3]
+    }, function (err, body) {
+      // debug('azk service success', err, body);
+      assert(body);
+      done();
+    });
+  });
+
+  it('urllib should use querystring to signature occur error.', function (done) {
+    const client = new ServiceClient({
+      endpoint: services.azk.endpoint,
+      accessKeyId: config.accessKeyId,
+      accessKeySecret: services.azk.accessKeySecret,
+      headers: {
+        'EagleEye-TraceId': '123456',
+        'X-ScopeId': config.tenantCode,
+        'X-Operator': config.userId,
+        'X-Work-App': config.workApp
+      }
+    });
+    client.get('/alg/categories', {
+      scopeId: 'dtboost',
+      isPrivate: true,
+      referType: 'DEFINE',
+      tenant: config.tenantCode,
+      a: [1, 2, 3]
+    }, {
+      nestedQuerystring: false
+    }, function (err, body) {
+      // debug('azk service error', err, body);
+      assert(err.code, 'AZK-AUTHC-ERROR');
       done();
     });
   });
