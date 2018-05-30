@@ -2,6 +2,7 @@
 
 const _ = require('lodash');
 const ServiceClient = require('./lib/service_client');
+const util = require('./lib/util');
 
 module.exports = function (app, config) {
   config = config || {};
@@ -11,7 +12,7 @@ module.exports = function (app, config) {
   let ridHeader = config && config.ridHeader || 'eagleeye-traceid';
   let disableFileSignature = config.disableFileSignature || false;
   if (ridHeader && typeof ridHeader !== 'string') {
-    throw 'fault [service-client]: ridHeader should be an string';
+    throw util.errorWrapper('[service-client]: ridHeader should be an string');
   }
 
   req.getService = function (serviceCode) {
@@ -19,7 +20,7 @@ module.exports = function (app, config) {
     let serviceCfg = config && config[serviceCode] || app.config.services && app.config.services[serviceCode];
     if (!serviceCfg) {
       log.error('the service config: ', app.config.services);
-      throw new Error(`Can not find ${serviceCode}'s service config.`);
+      throw util.errorWrapper(`[service-client]: Can not find ${serviceCode}'s service config.`);
     }
 
     let option = {};
