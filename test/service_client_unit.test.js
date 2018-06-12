@@ -251,4 +251,85 @@ describe('#new ServiceClient()', function () {
       done();
     });
   });
+
+  it('urllib should return promise when no callback provided.', function (done) {
+    const client = new ServiceClient({
+      endpoint: services.azk.endpoint,
+      accessKeyId: config.accessKeyId,
+      accessKeySecret: services.azk.accessKeySecret,
+      headers: {
+        'EagleEye-TraceId': '123456',
+        'X-ScopeId': config.tenantCode,
+        'X-Operator': config.userId,
+        'X-Work-App': config.workApp
+      }
+    });
+    client.get('/alg/categories', {
+      scopeId: 'dtboost',
+      isPrivate: true,
+      referType: 'DEFINE',
+      tenant: config.tenantCode,
+      a: [1, 2, 3]
+    }, {
+      nestedQuerystring: false
+    }).then(d => {
+      // should not come here
+      debug('hello should not come here.', d);
+    }).catch(err => {
+      assert(err.code, 'AZK-AUTHC-ERROR');
+      done();
+    });
+  });
+
+  it('urllib should use qs to stringify querystring and promise.', function (done) {
+    const client = new ServiceClient({
+      endpoint: services.azk.endpoint,
+      accessKeyId: config.accessKeyId,
+      accessKeySecret: services.azk.accessKeySecret,
+      headers: {
+        'EagleEye-TraceId': '123456',
+        'X-ScopeId': config.tenantCode,
+        'X-Operator': config.userId,
+        'X-Work-App': config.workApp
+      }
+    });
+    client.get('/alg/categories', {
+      scopeId: 'dtboost',
+      isPrivate: true,
+      referType: 'DEFINE',
+      tenant: config.tenantCode,
+      a: [1, 2, 3]
+    }).then((body) => {
+      // debug('azk service success', err, body);
+      assert(body);
+      done();
+    });
+  });
+
+  it('urllib should use qs to stringify querystring && promise && streaming.', function (done) {
+    const client = new ServiceClient({
+      endpoint: services.azk.endpoint,
+      accessKeyId: config.accessKeyId,
+      accessKeySecret: services.azk.accessKeySecret,
+      headers: {
+        'EagleEye-TraceId': '123456',
+        'X-ScopeId': config.tenantCode,
+        'X-Operator': config.userId,
+        'X-Work-App': config.workApp
+      }
+    });
+    client.get('/alg/categories', {
+      scopeId: 'dtboost',
+      isPrivate: true,
+      referType: 'DEFINE',
+      tenant: config.tenantCode,
+      a: [1, 2, 3]
+    }, {
+      streaming: true
+    }).then((body) => {
+      // debug('azk service success', err, body);
+      assert(body.res);
+      done();
+    });
+  });
 });

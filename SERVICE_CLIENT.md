@@ -2,13 +2,21 @@
 
 ServiceCilent 支持本身被单独使用:
 
+调用方式
+
 ```js
 import { ServiceClient } from 'hc-service-client';
 const client = new ServiceClient(options);
-client.get('/xxx', callback);
-client.post('/xxx', callback);
-client.put('/xxx', callback);
-client.delete('/xxx', callback);
+
+// 以get方法举例，其它方法的调用与get方法一致
+client.get('/xxx')              // return promise
+client.get('/xxx', callback)    // return undefined
+client.get('/xxx', {data})      // return promise
+client.get('/xxx', {data}, callback)      // return undefined
+client.get('/xxx', {data}, timeout)       // return promise
+client.get('/xxx', {data}, timeout, callback)   // return undefined
+client.get('/xxx', {data}, {urllibOptions})     // return promise
+client.get('/xxx', {data}, {urllibOptions}, callback) // return undefined
 ```
 
 参数信息：
@@ -39,7 +47,10 @@ const otmClient = new ServiceClient({
 });
 
 otmClient.post('/api/v2/objects', {}, function (err, data) {
-  // write code here.
+  // do something.
+});
+otmClient.get('/api/v2/objects').then(d => {
+  // do something.
 });
 ```
 
@@ -55,6 +66,6 @@ const userClient = new ServiceClient({
 });
 
 userClient.post('/analysis/api/query', {}, function (err, data) {
-  // write code here.
+  // do something.
 });
 ```
