@@ -73,6 +73,7 @@ hc-service-client的配置结构:
 | headers              | 使用serviceClient的默认发送headers，优先级高于headerExtension | {}        |
 | timeout              | 请求的超时时间（单位ms）                            | 60000     |
 | signatureHeader      | 签名请求头，默认 systemCall -> signature, userAuth -> Authorization | |
+| responseWrapper      | 为true时接口返回的结果会被要求 data.code === 'SUCCESS' | true |
 
 #### headerExtension
 

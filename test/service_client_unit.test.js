@@ -332,4 +332,60 @@ describe('#new ServiceClient()', function () {
       done();
     });
   });
+
+  it('responseWrapper without promise.', function (done) {
+    const client = new ServiceClient({
+      endpoint: services.azk.endpoint,
+      accessKeyId: config.accessKeyId,
+      accessKeySecret: services.azk.accessKeySecret,
+      headers: {
+        'EagleEye-TraceId': '123456',
+        'X-ScopeId': config.tenantCode,
+        'X-Operator': config.userId,
+        'X-Work-App': config.workApp
+      },
+      responseWrapper: false
+    });
+    client.get('/alg/categories', {
+      scopeId: 'dtboost',
+      isPrivate: true,
+      referType: 'DEFINE',
+      tenant: config.tenantCode,
+      a: [1, 2, 3]
+    }, {
+      nestedQuerystring: false
+    }, function (err, body) {
+      // debug('azk service error', err, body);
+      assert(body.code, 'AZK-AUTHC-ERROR');
+      done();
+    });
+  });
+
+  it('responseWrapper with promise.', function (done) {
+    const client = new ServiceClient({
+      endpoint: services.azk.endpoint,
+      accessKeyId: config.accessKeyId,
+      accessKeySecret: services.azk.accessKeySecret,
+      headers: {
+        'EagleEye-TraceId': '123456',
+        'X-ScopeId': config.tenantCode,
+        'X-Operator': config.userId,
+        'X-Work-App': config.workApp
+      },
+      responseWrapper: false
+    });
+    client.get('/alg/categories', {
+      scopeId: 'dtboost',
+      isPrivate: true,
+      referType: 'DEFINE',
+      tenant: config.tenantCode,
+      a: [1, 2, 3]
+    }, {
+      nestedQuerystring: false
+    }).then(function (data) {
+      // debug('azk service data', data);
+      assert(data.code, 'AZK-AUTHC-ERROR');
+      done();
+    });
+  });
 });
