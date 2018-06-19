@@ -46,6 +46,7 @@ module.exports = function (app, config) {
     option.disableFileSignature = disableFileSignature;
     option.log = log;
     option.headers = Object.assign({}, calculateHeaderExtension(this, option), serviceCfg.headers);
+    option.responseWrapper = serviceCfg.responseWrapper;
 
     return new ServiceClient(option);
   };

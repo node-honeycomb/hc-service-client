@@ -32,6 +32,7 @@ client.get('/xxx', {data}, {urllibOptions}, callback) // return undefined
 | headers              | 使用serviceClient的默认发送headers       | {}          |
 | timeout              | 请求的超时时间（单位ms）                     | 60000       |
 | signatureHeader      | 签名请求头，默认 systemCall -> signature, userAuth -> Authorization | |
+| responseWrapper      | 为true时接口返回的结果会被要求 data.code === 'SUCCESS' | true |
 
 systemCall 例子:
 
