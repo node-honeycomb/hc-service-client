@@ -327,7 +327,7 @@ describe('#new ServiceClient()', function () {
     }, {
       streaming: true
     }).then((body) => {
-      // debug('azk service success', err, body);
+      debug('azk service success', body);
       assert(body.res);
       done();
     });
@@ -344,7 +344,7 @@ describe('#new ServiceClient()', function () {
         'X-Operator': config.userId,
         'X-Work-App': config.workApp
       },
-      responseWrapper: false
+      responseWrapper: data => data
     });
     client.get('/alg/categories', {
       scopeId: 'dtboost',
@@ -372,7 +372,7 @@ describe('#new ServiceClient()', function () {
         'X-Operator': config.userId,
         'X-Work-App': config.workApp
       },
-      responseWrapper: false
+      responseWrapper: data => data
     });
     client.get('/alg/categories', {
       scopeId: 'dtboost',
