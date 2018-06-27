@@ -32,6 +32,73 @@ client.get('/xxx', {data}, {urllibOptions}, callback) // return undefined
 | headers              | 使用serviceClient的默认发送headers       | {}          |
 | timeout              | 请求的超时时间（单位ms）                     | 60000       |
 | signatureHeader      | 签名请求头，默认 systemCall -> signature, userAuth -> Authorization | |
+| responseWrapper      | 处理返回结果的function | 默认函数，返回结果result.code!== 'SUCCESS'时作为错误处理，否则将result.data作为结果返回，详见下面文档responseWrapper参数介绍 |
+
+### responseWrapper
+> responseWrapper是一个function，用于处理返回结果
+
+responseWrapper返回结果及效果
+
+- 每次调用远程接口并且无发生调用错误时，会调用responseWrapper函数传入接口返回结果，并根据responseWrapper的返回决定是否作为错误返回给调用层；
+- 函数返回 Error 对象时，后续处理认为此次请求失败，并作为失败处理；
+- 函数返回正常 Object 时，后续处理认为此次请求成功，并将结果返回给调用层；
+
+### 默认responseWrapper函数
+
+```js
+function (data) {
+  // stream 模式时，data为空
+  if (!data) {
+    return data;
+  }
+
+  if (data.code !== 'SUCCESS') {
+    const err = new Error(data.message || 'empty error message');
+    Object.assign(err, data);
+    return err;
+  }
+
+  return data.data;
+}
+```
+
+### 使用responseWrapper的场景及例子
+
+场景：
+对接新系统，返回的数据结构为 result.errCode === 0 时表示成功，结果存放在result.data，其他时候表示失败，失败的信息存放在 result.errMsg.
+
+配置responseWrapper:
+
+```js
+new ServiceClient({
+  responseWrapper: function (data) {
+    if (!data) {
+      return data;
+    }
+
+    if (data.errCode !== 0) {
+      const err = new Error(data.errMsg || 'empty error message');
+      err.code = err.errCode;
+      return err;
+    }
+
+    return data.data;
+  }
+}).get('/xxx', function(err, data) {
+  // err: http请求error或者responseWrapper返回的error对象.
+  // data: responseWrapper返回的正常对象
+});
+```
+
+特别的，如果不想对结果做任何处理则可以使用如下responseWrapper:
+
+```js
+function (data) {
+  return data;
+}
+```
+
+### examples
 
 systemCall 例子:
 
