@@ -1,1 +1,3 @@
+1.0.6 fix: use querystring to get the correct path if nestedQuerystring is false
+1.0.5 always callback response
 1.0.4 list use approaches && support promise usage
