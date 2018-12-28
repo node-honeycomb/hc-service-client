@@ -24,7 +24,7 @@ client.get('/xxx', {data}, {urllibOptions}, callback) // return undefined
 | options              | desc                              | default     |
 | -------------------- | --------------------------------- | ----------- |
 | endpoint             | 远程的endpoint                       | 必填          |
-| accessKeyId          | 调用的用户标志                           | anonymous    |
+| accessKeyId          | 调用的用户标志                           | dtboost-system    |
 | accessKeySecret      | 调用的签名密钥                           | 必填          |
 | signatureApproach    | 签名方式  enum: [systemCall, userAuth]                                   | 默认 systemCall      |
 | log                  | log模块，里面提供debug/info/error/warn方法 | console.log |

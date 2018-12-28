@@ -65,7 +65,7 @@ hc-service-client的配置结构:
 | options              | desc                                     | default   |
 | -------------------- | ---------------------------------------- | --------- |
 | endpoint             | 远程的endpoint                              | 必填        |
-| accessKeyId          | 调用的用户标志                                  | anonymous |
+| accessKeyId          | 调用的用户标志                                  | dtboost-system |
 | accessKeySecret      | 调用的签名密钥，原token/systemToken               | 必填        |
 | signatureApproach    | 签名方式  enum: [systemCall, userAuth]                                   | 默认 systemCall      |
 | disableFileSignature | 禁用文件签名                                   | false     |

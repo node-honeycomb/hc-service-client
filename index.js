@@ -29,11 +29,11 @@ module.exports = function (app, config) {
     }
     if (typeof serviceCfg === 'string') {
       option.endpoint =  serviceCfg;
-      option.accessKeyId = 'anonymous';
+      option.accessKeyId = 'dtboost-system';
       option.accessKeySecret = app.config.systemToken;
     } else {
       option.endpoint =  serviceCfg.endpoint || serviceCfg.endPoint;
-      option.accessKeyId = serviceCfg.accessKeyId || 'anonymous';
+      option.accessKeyId = serviceCfg.accessKeyId || 'dtboost-system';
       option.accessKeySecret = serviceCfg.accessKeySecret || serviceCfg.token || app.config.systemToken;
     }
     if (this.headers[ridHeader.toLowerCase()]) {
