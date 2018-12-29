@@ -29,12 +29,12 @@ module.exports = function (app, config) {
     }
     if (typeof serviceCfg === 'string') {
       option.endpoint =  serviceCfg;
-      option.accessKeyId = 'anonymous';
-      option.accessKeySecret = app.config.systemToken;
+      option.accessKeyId = app.config.defaultAccessKeyId || 'anonymous';
+      option.accessKeySecret =  app.config.systemToken || app.config.defaultAccessKeySecret;
     } else {
       option.endpoint =  serviceCfg.endpoint || serviceCfg.endPoint;
-      option.accessKeyId = serviceCfg.accessKeyId || 'anonymous';
-      option.accessKeySecret = serviceCfg.accessKeySecret || serviceCfg.token || app.config.systemToken;
+      option.accessKeyId = serviceCfg.accessKeyId || app.config.defaultAccessKeyId || 'anonymous';
+      option.accessKeySecret = serviceCfg.accessKeySecret || serviceCfg.token || app.config.systemToken || app.config.defaultAccessKeySecret;
     }
     if (this.headers[ridHeader.toLowerCase()]) {
       option.rid = this.headers[ridHeader.toLowerCase()];
