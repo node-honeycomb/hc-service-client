@@ -34,7 +34,7 @@ module.exports = function (app, config) {
     } else {
       option.endpoint =  serviceCfg.endpoint || serviceCfg.endPoint;
       option.accessKeyId = serviceCfg.accessKeyId || app.config.defaultAccessKeyId || 'anonymous';
-      option.accessKeySecret = serviceCfg.accessKeySecret || serviceCfg.token || app.config.systemToken || app.config.defaultAccessKeySecret;
+       option.accessKeySecret = serviceCfg.accessKeySecret || serviceCfg.token || app.config.defaultAccessKeySecret || app.config.systemToken;
     }
     if (this.headers[ridHeader.toLowerCase()]) {
       option.rid = this.headers[ridHeader.toLowerCase()];
