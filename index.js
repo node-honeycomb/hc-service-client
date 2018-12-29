@@ -30,7 +30,7 @@ module.exports = function (app, config) {
     if (typeof serviceCfg === 'string') {
       option.endpoint =  serviceCfg;
       option.accessKeyId = app.config.defaultAccessKeyId || 'anonymous';
-      option.accessKeySecret =  app.config.systemToken || app.config.defaultAccessKeySecret;
+       option.accessKeySecret =  app.config.defaultAccessKeySecret || app.config.systemToken;
     } else {
       option.endpoint =  serviceCfg.endpoint || serviceCfg.endPoint;
       option.accessKeyId = serviceCfg.accessKeyId || app.config.defaultAccessKeyId || 'anonymous';
