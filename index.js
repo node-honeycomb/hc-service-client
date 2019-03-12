@@ -30,11 +30,11 @@ module.exports = function (app, config) {
     if (typeof serviceCfg === 'string') {
       option.endpoint =  serviceCfg;
       option.accessKeyId = app.config.defaultAccessKeyId || 'anonymous';
-       option.accessKeySecret =  app.config.defaultAccessKeySecret || app.config.systemToken;
+      option.accessKeySecret =  app.config.defaultAccessKeySecret || app.config.systemToken;
     } else {
       option.endpoint =  serviceCfg.endpoint || serviceCfg.endPoint;
       option.accessKeyId = serviceCfg.accessKeyId || app.config.defaultAccessKeyId || 'anonymous';
-       option.accessKeySecret = serviceCfg.accessKeySecret || serviceCfg.token || app.config.defaultAccessKeySecret || app.config.systemToken;
+      option.accessKeySecret = serviceCfg.accessKeySecret || serviceCfg.token || app.config.defaultAccessKeySecret || app.config.systemToken;
     }
     if (this.headers[ridHeader.toLowerCase()]) {
       option.rid = this.headers[ridHeader.toLowerCase()];
@@ -47,7 +47,8 @@ module.exports = function (app, config) {
     option.log = log;
     option.headers = Object.assign({}, calculateHeaderExtension(this, option), serviceCfg.headers);
     option.responseWrapper = serviceCfg.responseWrapper;
-
+    option.source = config.source;
+    option.target = serviceCode;
     return new ServiceClient(option);
   };
 
