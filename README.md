@@ -85,7 +85,7 @@ headerExtension是一个数组，数组中元素支持动态扩展header，
 
 - 函数, function (req, serviceCfg) ，返回 header
 - object，直接写header内容
-- 内置扩展， 'otm' 、 'azk'
+- 内置扩展， 'otm' 、 'azk' 、'gateway'
 
 如:
 
