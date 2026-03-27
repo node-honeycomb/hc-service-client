@@ -1,6 +1,6 @@
 {
   "name": "hc-service-client",
-  "version": "2.0.0-alpha.1",
+  "version": "2.0.0-alpha.2",
   "description": "Service Client Extension for Honeybee",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   ],
   "dependencies": {
     "jsonwebtoken": "^9.0.2",
-    "lodash": "4.17.21",
+    "lodash": "^4.17.23",
     "qs": "^6.14.0",
     "urllib": "^4.8.2",
     "uuid": "^8.3.0"
